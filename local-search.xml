@@ -4,11 +4,11 @@
   
   
   <entry>
-    <title>20250607</title>
-    <link href="/2025/06/07/20250607/"/>
-    <url>/2025/06/07/20250607/</url>
+    <title>Linux/UNIX文件系统</title>
+    <link href="/Diffcc/Diffcc.github.io/2025/06/07/20250607/"/>
+    <url>/Diffcc/Diffcc.github.io/2025/06/07/20250607/</url>
     
-    <content type="html"><![CDATA[<img src="2025/06/07/20250607/linux.jpg" class="">]]></content>
+    <content type="html"><![CDATA[<img src="Diffcc/2025/06/07/20250607/linux.jpg" class="">]]></content>
     
     
     <categories>
@@ -20,7 +20,11 @@
     
     <tags>
       
-      <tag>原创</tag>
+      <tag>UNIX</tag>
+      
+      <tag>系统编程</tag>
+      
+      <tag>嵌入式软件</tag>
       
     </tags>
     
