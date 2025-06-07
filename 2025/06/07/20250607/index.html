@@ -34,8 +34,10 @@
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607/ext3.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607/ext4.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607/mount.png">
+<meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607/proc_mounts.png">
 <meta property="article:published_time" content="2025-06-07T05:57:09.000Z">
-<meta property="article:modified_time" content="2025-06-07T10:10:46.735Z">
+<meta property="article:modified_time" content="2025-06-07T11:51:40.767Z">
 <meta property="article:author" content="Diffcc">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607/linux.jpg">
@@ -232,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.8k 字
         
       </span>
     
@@ -243,7 +245,7 @@
         
         
         
-          12 分钟
+          16 分钟
         
       </span>
     
@@ -344,8 +346,51 @@
 <p>不同的文件系统对比可参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/689551298">https://zhuanlan.zhihu.com/p/689551298</a></p>
 <p><img src="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="文件系统性能对比"></p>
 <h3 id="日志文件系统"><a href="#日志文件系统" class="headerlink" title="日志文件系统"></a>日志文件系统</h3><p><strong>日志文件系统</strong>的作用在于避免了系统崩溃之后，为了确保文件系统的完整，需要遍历整个文件系统，来检查一致性（<em><strong>fcsk</strong></em>）。</p>
-<p>日志文件系统会将更新操作记录在专门的磁盘日志文件中，可利用日志重做（<em><strong>redo</strong></em>）任何不完整更新（日志系统总能够保证将<strong>文件元数据事务</strong>作为一个完整单元提交至磁盘）</p>
-<h3 id="文件挂载"><a href="#文件挂载" class="headerlink" title="文件挂载"></a>文件挂载</h3>
+<p>日志文件系统会将更新操作记录在专门的磁盘日志文件中，可利用日志重做（<em><strong>redo</strong></em>）任何不完整更新（日志系统总能够保证将<strong>文件元数据事务</strong>作为一个完整单元提交至磁盘）。</p>
+<h3 id="文件挂载"><a href="#文件挂载" class="headerlink" title="文件挂载"></a>文件挂载</h3><p>文件挂载（Mount）的作用是将存储设备（如硬盘分区、光盘、网络存储等）或虚拟文件系统（如<code>proc</code>、<code>sysfs</code>等）关联到目录树的某个位置（挂载点），使得用户和程序可以<strong>通过文件系统接口访问这些资源</strong>。</p>
+<p><strong>Linux&#x2F;UNIX</strong>所有的文件系统中的文件都位于单根目录树下（<em><strong>”&#x2F;“</strong></em>），其他的文件系统都挂载在根目录下，被视为整个目录层级的子树（<em><strong>subtree</strong></em>）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 将device文件系统挂载在directory所指定的目录下</span><br>mount device directory<br><br><span class="hljs-comment"># mount用于列出当前已挂载的文件系统，unmount用于卸载</span><br>mount<br></code></pre></td></tr></table></figure>
+
+<p><img src="mount.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="mount"></p>
+<p>用于查看当前已挂载和可挂载的文件信息：<code>/proc/mounts</code>，<code>/etc/mtab</code>，<code>/etc/fstab</code></p>
+<p><img src="proc_mounts.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="proc_mounts"></p>
+<ul>
+<li><strong>文件系统类型</strong>: <code>sysfs</code>（虚拟文件系统，用于导出内核对象信息）</li>
+<li><strong>挂载点</strong>: <code>/sys</code></li>
+<li><strong>文件系统类型</strong>: <code>sysfs</code></li>
+<li><strong>挂载标志</strong>:<ul>
+<li><code>rw</code>: 以读写方式挂载</li>
+<li><code>nosuid</code>: 忽略文件系统中的SUID&#x2F;SGID权限位（禁用setuid&#x2F;setgid效果）</li>
+<li><code>nodev</code>: 不允许解释文件系统上的设备文件（禁用设备文件）</li>
+<li><code>noexec</code>: 禁止直接执行该文件系统上的程序</li>
+<li><code>relatime</code>: 仅在访问时间早于修改时间时更新访问时间（优化性能）</li>
+</ul>
+</li>
+<li><strong>数字字段</strong>:<ul>
+<li><code>0</code>: dump备份标志（0表示不备份）</li>
+<li><code>0</code>: fsck检查顺序（0表示不检查）</li>
+</ul>
+</li>
+</ul>
+<h4 id="高级挂载特性"><a href="#高级挂载特性" class="headerlink" title="高级挂载特性"></a>高级挂载特性</h4><p><strong>多个挂载点挂在文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">mount /dev/sda12 /test1<br>mount /dev/sda12 /test2<br><br><span class="hljs-comment">#在test1挂载点下操作，test2下完全可见</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>多次挂载同一挂载点</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">每次新挂载会隐藏之前可见于挂载点下的目录子树<br>mount /dev/sda12 /testfs<br>mount /dev/sda12 /testfs<br><br><span class="hljs-comment">#卸载最后一次挂载，上次挂载内容可见</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>基于每次挂载的挂载标志</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#mountflag可以基于每次挂载来设置</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>绑定挂载</strong></p>
+<p><strong>两处同时可见，类似于硬链接，但可以针对目录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">MS_BIND<br>mount --<span class="hljs-built_in">bind</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>递归绑定挂载</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">MS_BIND OR MS_REC<br></code></pre></td></tr></table></figure>
+
+
+
+
                 
               </div>
             
