@@ -19,12 +19,12 @@
   <meta name="author" content="Diffcc">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Pytorch1.安装环境&#x3D;&#x3D;pyhton 3.6  Anaconda 3.5.2&#x3D;&#x3D;&#x3D;&#x3D;CUDA+显卡驱动&#x3D;&#x3D; create -n pytorch python&#x3D;3.6conda activate pytorchpip list 2. Pytorch安装 查看nvidia对应的Version  验证是否安装成功 12">
+    <meta name="description" content="本文可以作为Pytorch初学者的快速上手文档，参考B站小土堆">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pytorch简明教程">
 <meta property="og:url" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607-2/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="Pytorch1.安装环境&#x3D;&#x3D;pyhton 3.6  Anaconda 3.5.2&#x3D;&#x3D;&#x3D;&#x3D;CUDA+显卡驱动&#x3D;&#x3D; create -n pytorch python&#x3D;3.6conda activate pytorchpip list 2. Pytorch安装 查看nvidia对应的Version  验证是否安装成功 12">
+<meta property="og:description" content="本文可以作为Pytorch初学者的快速上手文档，参考B站小土堆">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607-2/pytorch%E4%B8%8B%E8%BD%BD.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607-2/CUDA%E7%89%88%E6%9C%AC.png">
@@ -83,7 +83,7 @@
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607-2/%E8%BE%93%E5%87%BA7.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607-2/CUDA.png">
 <meta property="article:published_time" content="2025-06-07T14:32:50.000Z">
-<meta property="article:modified_time" content="2025-06-07T15:08:22.117Z">
+<meta property="article:modified_time" content="2025-06-07T15:10:12.231Z">
 <meta property="article:author" content="Diffcc">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/07/20250607-2/pytorch%E4%B8%8B%E8%BD%BD.png">
@@ -342,7 +342,10 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Pytorch"><a href="#Pytorch" class="headerlink" title="Pytorch"></a>Pytorch</h1><h2 id="1-安装环境"><a href="#1-安装环境" class="headerlink" title="1.安装环境"></a>1.安装环境</h2><p>&#x3D;&#x3D;pyhton 3.6  Anaconda 3.5.2&#x3D;&#x3D;<br>&#x3D;&#x3D;CUDA+显卡驱动&#x3D;&#x3D;</p>
+                <p>本文可以作为Pytorch初学者的快速上手文档，参考B站小土堆</p>
+<span id="more"></span>
+
+<h1 id="Pytorch"><a href="#Pytorch" class="headerlink" title="Pytorch"></a>Pytorch</h1><h2 id="1-安装环境"><a href="#1-安装环境" class="headerlink" title="1.安装环境"></a>1.安装环境</h2><p>&#x3D;&#x3D;pyhton 3.6  Anaconda 3.5.2&#x3D;&#x3D;<br>&#x3D;&#x3D;CUDA+显卡驱动&#x3D;&#x3D;</p>
 <p><code>create -n pytorch python=3.6</code><br><code>conda activate pytorch</code><br><code>pip list</code></p>
 <h2 id="2-Pytorch安装"><a href="#2-Pytorch安装" class="headerlink" title="2. Pytorch安装"></a>2. Pytorch安装</h2><p><img src="pytorch%E4%B8%8B%E8%BD%BD.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="pytorch下载"></p>
 <p>查看nvidia对应的Version</p>
@@ -386,7 +389,7 @@
 
 
 <h2 id="7-TensorBoard-使用"><a href="#7-TensorBoard-使用" class="headerlink" title="7. TensorBoard 使用"></a>7. TensorBoard 使用</h2><p>&#x3D;&#x3D;探究模型不同阶段的输出图像效果&#x3D;&#x3D;</p>
-<style>.qywbdoxvijnq{zoom:80%;}</style><img src="Diffcc/2025/06/07/20250607-2/Tensorboard.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload class="qywbdoxvijnq" alt="Tensorboard">
+<style>.rpjdkmjquyyd{zoom:80%;}</style><img src="Diffcc/2025/06/07/20250607-2/Tensorboard.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload class="rpjdkmjquyyd" alt="Tensorboard">
 
 <p><code>writer.add_scalar()</code></p>
 <p><img src="Tensorboard%E8%AE%BE%E7%BD%AE.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Tensorboard设置"></p>
@@ -397,7 +400,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">tensorboard --logdir=logs --host=<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-comment">##logdir=logs文件也就是 Summarywriter（“logs”）中的文件地址</span><br>tensorboard --logdir=logs --host=<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> --port=<span class="hljs-number">6007</span>  <span class="hljs-comment">##定义端口名字 防止冲突</span><br></code></pre></td></tr></table></figure>
 
 <p><img src="%E6%9C%AC%E5%9C%B0%E5%9C%B0%E5%9D%80.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="本地地址"></p>
-<style>.pxopspcetnlw{zoom:80%;}</style><img src="Diffcc/2025/06/07/20250607-2/%E8%BE%93%E5%87%BA2.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload class="pxopspcetnlw" alt="输出2">
+<style>.hpjrichcxmgw{zoom:80%;}</style><img src="Diffcc/2025/06/07/20250607-2/%E8%BE%93%E5%87%BA2.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload class="hpjrichcxmgw" alt="输出2">
 
 <p>&#x3D;&#x3D;注意：程序运行多次，logs文件中会生成不一样的图像  每向wirter中写入上一个程序 数据会保留&#x3D;&#x3D;<br>&#x3D;&#x3D;删除 logs&#x3D;&#x3D;</p>
 <p><strong>读取图像</strong></p>
