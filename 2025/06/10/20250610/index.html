@@ -19,12 +19,12 @@
   <meta name="author" content="Diffcc">
   <meta name="keywords" content="">
   
-    <meta name="description" content="perf 是 Linux 内核提供的一个强大的性能分析工具，基于 硬件性能计数器（Performance Monitoring Counters, PMC） 和 内核事件采样 来监控系统性能。">
+    <meta name="description" content="perf 是 Linux 内核提供的一个强大的性能分析工具，基于 硬件性能计数器（Performance Monitoring Counters, PMC） 和 内核事件采样 来监控系统性能。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Perf Linux使用教程">
 <meta property="og:url" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/10/20250610/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="perf 是 Linux 内核提供的一个强大的性能分析工具，基于 硬件性能计数器（Performance Monitoring Counters, PMC） 和 内核事件采样 来监控系统性能。">
+<meta property="og:description" content="perf 是 Linux 内核提供的一个强大的性能分析工具，基于 硬件性能计数器（Performance Monitoring Counters, PMC） 和 内核事件采样 来监控系统性能。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/10/20250610/Perf%E5%8E%9F%E7%90%86%E5%9B%BE.jpg">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/06/10/20250610/Perf%E7%BD%91%E9%A1%B5%E7%AB%AF%E7%95%8C%E9%9D%A2.png">
@@ -295,33 +295,56 @@
             
               <div class="markdown-body">
                 
-                <p><code>perf</code> 是 Linux 内核提供的一个强大的性能分析工具，基于 <strong>硬件性能计数器（Performance Monitoring Counters, PMC）</strong> 和 <strong>内核事件采样</strong> 来监控系统性能。</p>
+                <p><code>perf</code> 是 Linux 内核提供的一个强大的性能分析工具，基于
+<strong>硬件性能计数器（Performance Monitoring Counters, PMC）</strong>
+和 <strong>内核事件采样</strong> 来监控系统性能。</p>
 <span id="more"></span>
 <h2 id="基本原理">基本原理</h2>
-<p>Linux性能计数器是一个基于内核的子系统，它提供一个性能分析框架，比如硬件**（CPU、PMU（Performance Monitoring Unit））<strong>功能和软件</strong>（软件计数器、tracepoint）**功能。通过perf，应用程序可以利用PMU、tracepoint和内核中的计数器来进行性能统计。</p>
+<p>Linux性能计数器是一个基于内核的子系统，它提供一个性能分析框架，比如硬件<strong>（CPU、PMU（Performance
+Monitoring
+Unit））</strong>功能和软件<strong>（软件计数器、tracepoint）</strong>功能。通过perf，应用程序可以利用PMU、tracepoint和内核中的计数器来进行性能统计。</p>
 <ul>
-<li>现代 CPU（如 Intel、AMD、ARM）都内置了 <strong>性能监控单元（PMU, Performance Monitoring Unit）</strong>，可以统计各种硬件事件：<strong>CPU 周期数（cycles）</strong>，<strong>指令数（instructions）</strong>，<strong>缓存命中/失效（cache-misses, cache-references）</strong>，<strong>分支预测失败（branch-misses）</strong>，<strong>分支预测失败（branch-misses）</strong>，<code>perf</code> 通过 <strong>PMU</strong> 读取这些计数器，计算 <strong>CPI（Cycles Per Instruction）</strong>、<strong>缓存命中率</strong> 等指标，帮助分析程序瓶颈。</li>
-<li>除了硬件事件，<code>perf</code> 还可以监控 <strong>内核/用户态软件事件</strong>：<strong>CPU 调度事件（context-switches, migrations）</strong>，<strong>缺页异常（page-faults）</strong>，<strong>系统调用（syscalls）</strong>，<strong>块设备 I/O（block:block_rq_issue</strong>，这些数据可以帮忙分析系统调用开销、调度延迟、I/O瓶颈等问题。</li>
-<li><code>perf</code>支持<strong>动态探针（Dynamic Probes）</strong>，类似于<code>ftrace</code>和<code>eBPF</code>：<strong>kprobes</strong>：动态追踪内核函数，<strong>uprobes</strong>：动态追踪用户态函数，<strong>tracepoints</strong>：静态内核跟踪点（如 <code>sched:sched_switch</code>）。</li>
+<li>现代 CPU（如 Intel、AMD、ARM）都内置了 <strong>性能监控单元（PMU,
+Performance Monitoring
+Unit）</strong>，可以统计各种硬件事件：<strong>CPU
+周期数（cycles）</strong>，<strong>指令数（instructions）</strong>，<strong>缓存命中/失效（cache-misses,
+cache-references）</strong>，<strong>分支预测失败（branch-misses）</strong>，<strong>分支预测失败（branch-misses）</strong>，<code>perf</code>
+通过 <strong>PMU</strong> 读取这些计数器，计算 <strong>CPI（Cycles Per
+Instruction）</strong>、<strong>缓存命中率</strong>
+等指标，帮助分析程序瓶颈。</li>
+<li>除了硬件事件，<code>perf</code> 还可以监控
+<strong>内核/用户态软件事件</strong>：<strong>CPU
+调度事件（context-switches,
+migrations）</strong>，<strong>缺页异常（page-faults）</strong>，<strong>系统调用（syscalls）</strong>，<strong>块设备
+I/O（block:block_rq_issue</strong>，这些数据可以帮忙分析系统调用开销、调度延迟、I/O瓶颈等问题。</li>
+<li><code>perf</code>支持<strong>动态探针（Dynamic
+Probes）</strong>，类似于<code>ftrace</code>和<code>eBPF</code>：<strong>kprobes</strong>：动态追踪内核函数，<strong>uprobes</strong>：动态追踪用户态函数，<strong>tracepoints</strong>：静态内核跟踪点（如
+<code>sched:sched_switch</code>）。</li>
 </ul>
 <p>每隔一个固定时间，CPU上产生一个中断，Perf监控当前是哪个进程、哪个函数，然后给对应的进程和函数加一个统计值，这样就知道CPU有多少时间在某个进程或某个函数上。</p>
-<p><img src="Perf%E5%8E%9F%E7%90%86%E5%9B%BE.jpg" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf原理图"></p>
+<figure>
+<img src="Perf原理图.jpg" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf原理图" />
+<figcaption aria-hidden="true">Perf原理图</figcaption>
+</figure>
 <h2 id="安装">安装</h2>
-<h3 id="1-云端">1.云端</h3>
+<h3 id="云端">1.云端</h3>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">https://ui.perfetto.dev/<br></code></pre></td></tr></table></figure>
 <p>Google浏览器访问上述链接，通过导入<code>.json</code>记录文件，生成性能火焰图</p>
-<p><img src="Perf%E7%BD%91%E9%A1%B5%E7%AB%AF%E7%95%8C%E9%9D%A2.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf网页端界面"></p>
-<h3 id="2-本地">2. 本地</h3>
-<ol>
+<figure>
+<img src="Perf网页端界面.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf网页端界面" />
+<figcaption aria-hidden="true">Perf网页端界面</figcaption>
+</figure>
+<h3 id="本地">2. 本地</h3>
+<ol type="1">
 <li>运行 <code>perf –version</code> 查看当前需要安装哪些库文件</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) dongnan@server:~/GccTrace_ws/GccTrace/build$ perf --version<br>WARNING: perf not found <span class="hljs-keyword">for</span> kernel 5.4.0-150<br><br>  You may need to install the following packages <span class="hljs-keyword">for</span> this specific kernel:<br>    linux-tools-5.4.0-150-generic<br>    linux-cloud-tools-5.4.0-150-generic<br><br>  You may also want to install one of the following packages to keep up to <span class="hljs-built_in">date</span>:<br>    linux-tools-generic<br>    linux-cloud-tools-generic<br>    <br>    <br>    <br><span class="hljs-built_in">sudo</span> apt-get install linux-tools-5.4.0-150-generic linux-cloud-tools-5.4.0-150-generic linux-tools-generic linux-cloud-tools-generic<br></code></pre></td></tr></table></figure>
-<ol start="2">
+<ol start="2" type="1">
 <li>安装相应库文件 重新运行 perf –version 能够输出对应的版本信息</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) dongnan@server:~/GccTrace_ws/GccTrace/build$ perf --version<br><br>perf version 5.4.233<br></code></pre></td></tr></table></figure>
 <h2 id="使用">使用</h2>
-<h3 id="1-实时分析">1.实时分析</h3>
+<h3 id="实时分析">1.实时分析</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf top<br></code></pre></td></tr></table></figure>
 <p>只能实时查看目前为止占用cpu较高的进程，不便于事后分析</p>
 <p>-e：指定性能事件</p>
@@ -334,16 +357,19 @@
 <p>执行下面命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> perf top -e task-clock -g -p 21437 -s <span class="hljs-built_in">comm</span>,dso,symbol<br><br><span class="hljs-comment">#comm：触发事件的进程名</span><br><span class="hljs-comment">#dso：Dynamic Shared Object，可以是应用程序、内核、动态链接库、模块</span><br><span class="hljs-comment">#symbol：函数名</span><br></code></pre></td></tr></table></figure>
 <table>
+
 <thead>
 <tr>
 <th><code>-e task-clock</code></th>
-<th>监控 <strong>任务时钟（Task Clock）</strong> 事件，表示进程占用 CPU 的时间（单位：毫秒）。</th>
+<th>监控 <strong>任务时钟（Task Clock）</strong> 事件，表示进程占用 CPU
+的时间（单位：毫秒）。</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>-g</code></td>
-<td>记录 <strong>调用栈（Call Graph）</strong>，便于分析函数调用关系。</td>
+<td>记录 <strong>调用栈（Call
+Graph）</strong>，便于分析函数调用关系。</td>
 </tr>
 <tr>
 <td><code>-p 21437</code></td>
@@ -351,68 +377,91 @@
 </tr>
 <tr>
 <td><code>-s comm,dso,symbol</code></td>
-<td>显示字段： - <code>comm</code>：进程名。 - <code>dso</code>：动态共享对象（如 <code>libc.so</code>、可执行文件）。 - <code>symbol</code>：函数符号名（如 <code>malloc</code>、<code>main</code>）</td>
+<td>显示字段： - <code>comm</code>：进程名。 -
+<code>dso</code>：动态共享对象（如 <code>libc.so</code>、可执行文件）。
+- <code>symbol</code>：函数符号名（如
+<code>malloc</code>、<code>main</code>）</td>
 </tr>
 </tbody>
 </table>
-<p><img src="Perf_top.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf_top"></p>
+<figure>
+<img src="Perf_top.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf_top" />
+<figcaption aria-hidden="true">Perf_top</figcaption>
+</figure>
 <p>执行下面命令监控所有进程</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf top -e task-clock -g<br></code></pre></td></tr></table></figure>
-<p><img src="%E7%9B%91%E6%8E%A7%E6%89%80%E6%9C%89%E8%BF%9B%E7%A8%8B.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="监控所有进程"></p>
-<h3 id="2-生成数据文件后离线分析"><strong>2.生成数据文件后离线分析</strong></h3>
+<figure>
+<img src="监控所有进程.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="监控所有进程" />
+<figcaption aria-hidden="true">监控所有进程</figcaption>
+</figure>
+<h3
+id="生成数据文件后离线分析"><strong>2.生成数据文件后离线分析</strong></h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf record<br></code></pre></td></tr></table></figure>
-<p><code>perf record</code>用于 <strong>采集性能数据并保存到文件</strong>（默认生成 <code>perf.data</code>），便于后续离线分析（如 <code>perf report</code>、生成火焰图等</p>
+<p><code>perf record</code>用于
+<strong>采集性能数据并保存到文件</strong>（默认生成
+<code>perf.data</code>），便于后续离线分析（如
+<code>perf report</code>、生成火焰图等</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf record [选项] &lt;<span class="hljs-built_in">command</span>&gt;  <span class="hljs-comment"># 监控指定命令的执行</span><br></code></pre></td></tr></table></figure>
 <table>
+
 <thead>
 <tr>
-<th style="text-align:left">选项</th>
-<th style="text-align:left">作用</th>
+<th style="text-align: left;">选项</th>
+<th style="text-align: left;">作用</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><code>-e &lt;事件&gt;</code></td>
-<td style="text-align:left">指定监控的事件（如 <code>cycles</code>, <code>cache-misses</code>, <code>task-clock</code>）。</td>
+<td style="text-align: left;"><code>-e &lt;事件&gt;</code></td>
+<td style="text-align: left;">指定监控的事件（如 <code>cycles</code>,
+<code>cache-misses</code>, <code>task-clock</code>）。</td>
 </tr>
 <tr>
-<td style="text-align:left"><code>-p &lt;PID&gt;</code></td>
-<td style="text-align:left">监控指定进程（通过进程 ID）。</td>
+<td style="text-align: left;"><code>-p &lt;PID&gt;</code></td>
+<td style="text-align: left;">监控指定进程（通过进程 ID）。</td>
 </tr>
 <tr>
-<td style="text-align:left"><code>-F &lt;频率&gt;</code></td>
-<td style="text-align:left">采样频率（Hz，如 <code>-F 99</code> 表示每秒采样 99 次）。</td>
+<td style="text-align: left;"><code>-F &lt;频率&gt;</code></td>
+<td style="text-align: left;">采样频率（Hz，如 <code>-F 99</code>
+表示每秒采样 99 次）。</td>
 </tr>
 <tr>
-<td style="text-align:left"><code>-g</code></td>
-<td style="text-align:left">记录调用栈（用于生成火焰图）。</td>
+<td style="text-align: left;"><code>-g</code></td>
+<td style="text-align: left;">记录调用栈（用于生成火焰图）。</td>
 </tr>
 <tr>
-<td style="text-align:left"><code>-a</code></td>
-<td style="text-align:left">监控所有 CPU（系统级分析）。</td>
+<td style="text-align: left;"><code>-a</code></td>
+<td style="text-align: left;">监控所有 CPU（系统级分析）。</td>
 </tr>
 <tr>
-<td style="text-align:left"><code>-o &lt;文件&gt;</code></td>
-<td style="text-align:left">指定输出文件（默认 <code>perf.data</code>）。</td>
+<td style="text-align: left;"><code>-o &lt;文件&gt;</code></td>
+<td style="text-align: left;">指定输出文件（默认
+<code>perf.data</code>）。</td>
 </tr>
 <tr>
-<td style="text-align:left"><code>--call-graph &lt;方法&gt;</code></td>
-<td style="text-align:left">调用栈记录方式（<code>fp</code>=帧指针，<code>dwarf</code>=调试信息）。</td>
+<td
+style="text-align: left;"><code>--call-graph &lt;方法&gt;</code></td>
+<td
+style="text-align: left;">调用栈记录方式（<code>fp</code>=帧指针，<code>dwarf</code>=调试信息）。</td>
 </tr>
 <tr>
-<td style="text-align:left"><code>-s</code></td>
-<td style="text-align:left">按线程分离统计。</td>
+<td style="text-align: left;"><code>-s</code></td>
+<td style="text-align: left;">按线程分离统计。</td>
 </tr>
 <tr>
-<td style="text-align:left"><code>-C &lt;CPU列表&gt;</code></td>
-<td style="text-align:left">仅监控指定 CPU（如 <code>-C 0,1</code>）。</td>
+<td style="text-align: left;"><code>-C &lt;CPU列表&gt;</code></td>
+<td style="text-align: left;">仅监控指定 CPU（如
+<code>-C 0,1</code>）。</td>
 </tr>
 </tbody>
 </table>
-<h4 id="使用perf启动服务（不需要root权限）">使用perf启动服务（不需要root权限）</h4>
+<h4
+id="使用perf启动服务不需要root权限">使用perf启动服务（不需要root权限）</h4>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf record -g ./my_program  <span class="hljs-comment"># 监控程序运行，记录调用栈</span><br></code></pre></td></tr></table></figure>
-<p>程序结束后生成 <code>perf.data</code>，用 <code>perf report</code> 分析</p>
-<h4 id="挂接到已启动的进程（需要root权限）">挂接到已启动的进程（需要root权限）</h4>
+<p>程序结束后生成 <code>perf.data</code>，用 <code>perf report</code>
+分析</p>
+<h4
+id="挂接到已启动的进程需要root权限">挂接到已启动的进程（需要root权限）</h4>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf record -g -p &lt;PID&gt;      <span class="hljs-comment"># 监控指定进程</span><br></code></pre></td></tr></table></figure>
 <p>按 <code>Ctrl+C</code> 停止采样</p>
 <h4 id="指定采样事件">指定采样事件</h4>
@@ -421,18 +470,22 @@
 <h4 id="设置采样频率">设置采样频率</h4>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf record -F 99 -g ./my_program  <span class="hljs-comment"># 每秒采样 99 次</span><br></code></pre></td></tr></table></figure>
 <p>频率越高，数据越精确，但开销越大。</p>
-<h4 id="系统级监控（所有-CPU）"><strong>系统级监控（所有 CPU）</strong></h4>
+<h4 id="系统级监控所有-cpu"><strong>系统级监控（所有 CPU）</strong></h4>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf record -ag                  <span class="hljs-comment"># 监控所有进程和 CPU</span><br>perf record -ag -e context-switches  <span class="hljs-comment"># 监控上下文切换</span><br></code></pre></td></tr></table></figure>
-<h3 id="3-分析数据">3.分析数据</h3>
-<ol>
-<li>对于生成的.data目录可以直接运行 <code>perf report</code>查看相关报告</li>
+<h3 id="分析数据">3.分析数据</h3>
+<ol type="1">
+<li>对于生成的.data目录可以直接运行
+<code>perf report</code>查看相关报告</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf report                     <span class="hljs-comment"># 交互式查看热点</span><br>perf report --stdio             <span class="hljs-comment"># 命令行模式输出</span><br><br><span class="hljs-comment">#按函数/符号排序，显示 CPU 时间占比。</span><br></code></pre></td></tr></table></figure>
-<ol start="2">
-<li>通过火焰图分析（需要用到<em><strong>FlameGraph</strong></em>工具，也可以直接使用网页端<a target="_blank" rel="noopener" href="https://ui.perfetto.dev/%EF%BC%89">https://ui.perfetto.dev/）</a></li>
+<ol start="2" type="1">
+<li>通过火焰图分析（需要用到<strong><em>FlameGraph</em></strong>工具，也可以直接使用网页端https://ui.perfetto.dev/）</li>
 </ol>
 <p>CPU火焰图中的每一个方框是一个函数，方框的长度，代表了它的执行时间，所以越宽的函数，执行越久。火焰图的楼层每高一层，就是更深一级的函数被调用，最顶层的函数，是叶子函数。</p>
-<p><img src="%E7%81%AB%E7%84%B0%E5%9B%BE.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="火焰图"></p>
+<figure>
+<img src="火焰图.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="火焰图" />
+<figcaption aria-hidden="true">火焰图</figcaption>
+</figure>
 <ul>
 <li>FlameGraph工具使用</li>
 </ul>
