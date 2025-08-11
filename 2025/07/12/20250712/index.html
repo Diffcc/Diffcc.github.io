@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/SmoothQuant.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E8%BF%81%E7%A7%BB%E5%BC%BA%E5%BA%A6%E9%87%8F%E5%8C%96%E9%9A%BE%E5%BA%A6%E8%BD%AC%E7%A7%BB.png">
 <meta property="article:published_time" content="2025-07-12T05:05:00.000Z">
-<meta property="article:modified_time" content="2025-08-11T14:19:44.090Z">
+<meta property="article:modified_time" content="2025-08-11T14:24:10.545Z">
 <meta property="article:author" content="Diffcc">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E7%B2%BE%E5%BA%A6%E5%AF%B9%E6%AF%94.png">
@@ -419,11 +419,11 @@
 <li>OBC计算海森矩阵时,考虑参数矩阵的同一行相互相关, 不同行参数不相关, 海森矩阵只需要在每一行内单独计算.</li>
 <li>OBQ和OBC是同一篇文章,在OBC基础上做剪枝</li>
 </ol>
-<p>GPTO在OBQ基础上做了一些算法和性能上的优化:</p>
+<p>GPTQ在OBQ基础上做了一些算法和性能上的优化:</p>
 <ol>
-<li>GPTO采用贪心策略, 即按顺序做参数量化, 而不是先量化对目标影响较小的参数(这项改进使得参数矩阵每一行的量化可以做并行的矩阵计算)</li>
+<li>GPTQ采用贪心策略, 即按顺序做参数量化, 而不是先量化对目标影响较小的参数(这项改进使得参数矩阵每一行的量化可以做并行的矩阵计算)</li>
 <li>Lazy Batch-Updates: 延迟一部分参数的更新(每次量化一个参数, 其他所有未量化的参数都需要全部更新一遍), 缓解带宽压力</li>
-<li>Cholesky Reformulation, 用Chklesky分解求海森矩阵的逆, 减少计算量.</li>
+<li>Cholesky Reformulation, 用Cholesky分解求海森矩阵的逆, 减少计算量.</li>
 </ol>
 <p><img src="%E9%9D%9E%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0.PNG" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="非延迟更新" /></p>
 <p><strong>思路:</strong> 由于参数量化是一列一列按次序进行的，第 i 列的参数的量化结果受到前 i-1 列量化的影响，但第 i 列的量化结果不影响前面列的量化。因此我们不需要每次量化前面的列，就更新一遍第 i 列的参数，而是可以先记录第 i 列的更新量，在量化到第 i 列时，再一次性更新参数，这样就可以减少 IO 的次数。</p>
