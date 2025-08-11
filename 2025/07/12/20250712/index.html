@@ -32,6 +32,7 @@
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E4%B8%8D%E5%90%8C%E9%87%8F%E5%8C%96%E6%96%B9%E5%BC%8F.jpg">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E9%87%8F%E5%8C%96%E7%B2%92%E5%BA%A6.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E9%87%8F%E5%8C%96%E8%87%B3INT8.PNG">
+<meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/BLOCK_Scale.PNG">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E9%9D%9E%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0.PNG">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E5%BB%B6%E8%BF%9F%E6%9B%B4%E6%96%B0.PNG">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/INT4%E5%AF%B9%E6%AF%94NF4.png">
@@ -39,7 +40,7 @@
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/SmoothQuant.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E8%BF%81%E7%A7%BB%E5%BC%BA%E5%BA%A6%E9%87%8F%E5%8C%96%E9%9A%BE%E5%BA%A6%E8%BD%AC%E7%A7%BB.png">
 <meta property="article:published_time" content="2025-07-12T05:05:00.000Z">
-<meta property="article:modified_time" content="2025-08-11T14:24:10.545Z">
+<meta property="article:modified_time" content="2025-08-11T14:29:04.772Z">
 <meta property="article:author" content="Diffcc">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/07/12/20250712/%E7%B2%BE%E5%BA%A6%E5%AF%B9%E6%AF%94.png">
@@ -406,7 +407,7 @@
 <p>（<strong>注：W4A16 = 4-bit 整数量化权重 + 16-bit 浮点激活值，KV4 中的 4 表示 4-bit 量化</strong>）</p>
 <p><img src="%E9%87%8F%E5%8C%96%E8%87%B3INT8.PNG" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="量化至INT8" /></p>
 <p>图中展示的是量化到 int8，因此 Round to Grid 实际上是先乘以 127(=2**(8-1)-1)，然后 round 到最近的整数</p>
-<p>![BLOCK Scale](BLOCK Scale.PNG)</p>
+<p><img src="BLOCK_Scale.PNG" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="BLOCK_Scale" /></p>
 <p>图为了避免outlier的影响, 将输入Tensor分割成一个一个block, 每个block进行单独量化, 有单独的scale和zero, 精度损失更少</p>
 <h3 id="GPTQ-W4A16-W8A16">GPTQ(W4A16, W8A16)</h3>
 <p>GPTQ只针对权重量化, 不针对激活</p>
