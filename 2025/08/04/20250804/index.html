@@ -19,26 +19,23 @@
   <meta name="author" content="Diffcc">
   <meta name="keywords" content="">
   
-    <meta name="description" content="NVIDIA TransformerEngine是一个专注于优化Transformer模型训练和推理性能的高效工具库。该项目通过提供FP8混合精度支持、优化的注意力机制实现以及分布式训练集成等功能，显著提升了大规模语言模型的训练效率。">
+    <meta name="description" content="NVIDIA TransformerEngine是一个专注于优化Transformer模型训练和推理性能的高效工具库。该项目通过提供FP8混合精度支持、优化的注意力机制实现以及分布式训练集成等功能，显著提升了大规模语言模型的训练效率。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TransformerEngine加速库">
 <meta property="og:url" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="NVIDIA TransformerEngine是一个专注于优化Transformer模型训练和推理性能的高效工具库。该项目通过提供FP8混合精度支持、优化的注意力机制实现以及分布式训练集成等功能，显著提升了大规模语言模型的训练效率。">
+<meta property="og:description" content="NVIDIA TransformerEngine是一个专注于优化Transformer模型训练和推理性能的高效工具库。该项目通过提供FP8混合精度支持、优化的注意力机制实现以及分布式训练集成等功能，显著提升了大规模语言模型的训练效率。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/H100%20TransformerEngine.PNG">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/FP8%E9%87%8F%E5%8C%96%E7%AE%A1%E7%90%86%E5%99%A8.PNG">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/%E4%B8%8D%E5%90%8C%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/%E6%95%B0%E5%80%BC%E8%8C%83%E5%9B%B4.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/MXFP8.png">
-<meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/Block%20Scaling.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/E8M0.png">
-<meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/TransformerEngine%20MXFP8%E5%89%8D%E5%90%91%E5%8F%8D%E5%90%91%E4%BC%98%E5%8C%96.png">
 <meta property="article:published_time" content="2025-08-04T14:05:00.000Z">
 <meta property="article:modified_time" content="2025-08-04T14:18:52.199Z">
 <meta property="article:author" content="Diffcc">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/H100%20TransformerEngine.PNG">
+<meta name="twitter:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/FP8%E9%87%8F%E5%8C%96%E7%AE%A1%E7%90%86%E5%99%A8.PNG">
   
   
   
@@ -298,61 +295,35 @@
             
               <div class="markdown-body">
                 
-                <p>NVIDIA
-TransformerEngine是一个专注于优化Transformer模型训练和推理性能的高效工具库。该项目通过提供FP8混合精度支持、优化的注意力机制实现以及分布式训练集成等功能，显著提升了大规模语言模型的训练效率。</p>
+                <p>NVIDIA TransformerEngine是一个专注于优化Transformer模型训练和推理性能的高效工具库。该项目通过提供FP8混合精度支持、优化的注意力机制实现以及分布式训练集成等功能，显著提升了大规模语言模型的训练效率。</p>
 <span id="more"></span>
-<p>TransformerEngine针对Transformer里面的Kernel进行了重写,
-以支持FP8特征, 扩展了Pytorch的功能.</p>
-<p>使用方式也是比较简单，使用该拓展额外包的一层 Module
-来搭建网络，即可，最后再包一层<a
-target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=250278123&amp;content_type=Article&amp;match_order=1&amp;q=混合精度训练&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NTQ0NTA3ODQsInEiOiLmt7flkIjnsr7luqborq3nu4MiLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoyNTAyNzgxMjMsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.zBU5ymd_pDNpWuxjHBihRgeQrGGH2jKN4QJhV_lNvM8&amp;zhida_source=entity">混合精度训练</a>作用域：</p>
+<p>TransformerEngine针对Transformer里面的Kernel进行了重写, 以支持FP8特征, 扩展了Pytorch的功能.</p>
+<p>使用方式也是比较简单，使用该拓展额外包的一层 Module 来搭建网络，即可，最后再包一层<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=250278123&amp;content_type=Article&amp;match_order=1&amp;q=%E6%B7%B7%E5%90%88%E7%B2%BE%E5%BA%A6%E8%AE%AD%E7%BB%83&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NTQ0NTA3ODQsInEiOiLmt7flkIjnsr7luqborq3nu4MiLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoyNTAyNzgxMjMsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.zBU5ymd_pDNpWuxjHBihRgeQrGGH2jKN4QJhV_lNvM8&amp;zhida_source=entity">混合精度训练</a>作用域：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> transformer_engine.pytorch <span class="hljs-keyword">as</span> te<br><span class="hljs-keyword">from</span> transformer_engine.common <span class="hljs-keyword">import</span> recipe<br><br><span class="hljs-comment"># Set dimensions.</span><br>in_features = <span class="hljs-number">768</span><br>out_features = <span class="hljs-number">3072</span><br>hidden_size = <span class="hljs-number">2048</span><br><br><span class="hljs-comment"># Initialize model and inputs.</span><br>model = te.Linear(in_features, out_features, use_bias=<span class="hljs-literal">True</span>)<br>inp = torch.randn(hidden_size, in_features, device=<span class="hljs-string">&quot;cuda&quot;</span>)<br><br><span class="hljs-comment"># 创建FP8训练的配置</span><br>fp8_recipe = recipe.DelayedScaling(margin=<span class="hljs-number">0</span>, interval=<span class="hljs-number">1</span>, fp8_format=recipe.Format.E4M3)<br><br><span class="hljs-comment"># FP8的autocast</span><br><span class="hljs-keyword">with</span> te.fp8_autocast(enabled=<span class="hljs-literal">True</span>, fp8_recipe=fp8_recipe):<br>    out = model(inp)<br><br>loss = out.<span class="hljs-built_in">sum</span>()<br>loss.backward()<br></code></pre></td></tr></table></figure>
-<p>在混合精度训练的情况下, 因为FP16本身的数值范围还是足够大的,
-<strong>在AMP(Automatic Mixed Prescision)下,
-只在最后一个Loss做一个scaling</strong>,
-这个步骤足以保证整个模型在运算过程中不会产生溢出.</p>
-<p>而FP8相比FP16减少了更多有效位, 因此不能简单复用FP16下的策略,
-需要给每个FP8 Tensor单独设置一个合适的scale factor. Transformer
-Engine需要动态地对输入范围进行调整, 如图所示:</p>
-<figure>
-<img src="H100%20TransformerEngine.PNG" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="H100 TransformerEngine" />
-<figcaption aria-hidden="true">H100 TransformerEngine</figcaption>
-</figure>
-<figure>
-<img src="FP8量化管理器.PNG" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="FP8量化管理器" />
-<figcaption aria-hidden="true">FP8量化管理器</figcaption>
-</figure>
-<p>具体到每一个算子实现动态范围调整的原理很简单, 通过记录历史的abs
-max值, 来去调整最终缩放的范围.</p>
-<p>其主要的 Kernel 实现都放在了 <a
-href="https://github.com/NVIDIA/TransformerEngine/tree/main/transformer_engine/common">common</a>
-目录下，我们以 gelu 这个 kernel 为例，最终它会调用到
-<code>vectorized_pointwise.h</code>这个文件，我们主要看
-<code>unary_kernel</code></p>
-<h4 id="unary_kernel">unary_kernel</h4>
+<p>在混合精度训练的情况下, 因为FP16本身的数值范围还是足够大的, <strong>在AMP(Automatic Mixed Prescision)下, 只在最后一个Loss做一个scaling</strong>, 这个步骤足以保证整个模型在运算过程中不会产生溢出.</p>
+<p>而FP8相比FP16减少了更多有效位, 因此不能简单复用FP16下的策略, 需要给每个FP8 Tensor单独设置一个合适的scale factor. Transformer Engine需要动态地对输入范围进行调整, 如图所示:</p>
+<p>![H100 TransformerEngine](H100 TransformerEngine.PNG)</p>
+<p><img src="FP8%E9%87%8F%E5%8C%96%E7%AE%A1%E7%90%86%E5%99%A8.PNG" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="FP8量化管理器"></p>
+<p>具体到每一个算子实现动态范围调整的原理很简单, 通过记录历史的abs max值, 来去调整最终缩放的范围.</p>
+<p>其主要的 Kernel 实现都放在了 <a href="https://github.com/NVIDIA/TransformerEngine/tree/main/transformer_engine/common">common</a> 目录下，我们以 gelu 这个 kernel 为例，最终它会调用到 <code>vectorized_pointwise.h</code>这个文件，我们主要看 <code>unary_kernel</code></p>
+<h4 id="unary-kernel">unary_kernel</h4>
 <p>这个核函数模板跟常规的 elementwise 向量化模板是类似的。</p>
 <p>首先会让每个线程获取到 scale 值</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp">ComputeType s = <span class="hljs-number">0</span>;<br><span class="hljs-function"><span class="hljs-keyword">if</span> <span class="hljs-title">constexpr</span> <span class="hljs-params">(is_fp8&lt;OutputType&gt;::value)</span> </span>&#123;<br>    <span class="hljs-comment">// 获取scale值</span><br>    <span class="hljs-keyword">if</span> (scale != <span class="hljs-literal">nullptr</span>) s = *scale;<br>    <span class="hljs-comment">// 将scale取倒数写回scale_inv</span><br>    <span class="hljs-keyword">if</span> (blockIdx.x == <span class="hljs-number">0</span> &amp;&amp; threadIdx.x == <span class="hljs-number">0</span> &amp;&amp; scale_inv != <span class="hljs-literal">nullptr</span>) &#123;<br>      <span class="hljs-built_in">reciprocal</span>&lt;ComputeType&gt;(scale_inv, s);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>其中在循环里，线程会不断更新他运算结果的最大值，并且最终运算结果要乘上
-scale 值：</p>
+<p>其中在循环里，线程会不断更新他运算结果的最大值，并且最终运算结果要乘上 scale 值：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">// 实际运算发生</span><br>ComputeType temp = <span class="hljs-built_in">OP</span>(val, p);<br><span class="hljs-function"><span class="hljs-keyword">if</span> <span class="hljs-title">constexpr</span> <span class="hljs-params">(is_fp8&lt;OutputType&gt;::value)</span> </span>&#123;<br>  __builtin_assume(max &gt;= <span class="hljs-number">0</span>);<br>  max = <span class="hljs-built_in">fmaxf</span>(<span class="hljs-built_in">fabsf</span>(temp), max);<br><br>  <span class="hljs-comment">// 缩放</span><br>  temp = temp * s;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>当 Kernel 主体运算完毕后，再也 warp 为单位做一个
-reduce_max，获取到线程束内的最大值，再通过 atomicMax
-原子操作，不断更新全局最大值：</p>
+<p>当 Kernel 主体运算完毕后，再也 warp 为单位做一个 reduce_max，获取到线程束内的最大值，再通过 atomicMax 原子操作，不断更新全局最大值：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-keyword">if</span> <span class="hljs-title">constexpr</span> <span class="hljs-params">(is_fp8&lt;OutputType&gt;::value)</span> </span>&#123;<br>  <span class="hljs-comment">/* warp tile amax reduce*/</span><br>  max = <span class="hljs-built_in">reduce_max</span>&lt;unary_kernel_threads / THREADS_PER_WARP&gt;(max, warp_id);<br><br>  <span class="hljs-keyword">if</span> (threadIdx.x == <span class="hljs-number">0</span> &amp;&amp; amax != <span class="hljs-literal">nullptr</span>) &#123;<br>      <span class="hljs-built_in">static_assert</span>(std::is_same&lt;ComputeType, <span class="hljs-type">float</span>&gt;::value);<br>      <span class="hljs-comment">// 更新全局最大值</span><br>      <span class="hljs-built_in">atomicMaxFloat</span>(amax, max);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>其他 layernorm 等 Kernel 也是诸如类似的逻辑，这里就不再展开了.</p>
-<h4 id="python-api">Python API</h4>
-<h5 id="delayedscaling">DelayedScaling</h5>
-<p>从前面的示例代码我们可以看到一个比较重要的 API
-是<code>DelayedScaling</code>，我们可以根据官方文档查看各个参数含义：</p>
+<h4 id="Python-API">Python API</h4>
+<h5 id="DelayedScaling">DelayedScaling</h5>
+<p>从前面的示例代码我们可以看到一个比较重要的 API 是<code>DelayedScaling</code>，我们可以根据官方文档查看各个参数含义：</p>
 <ul>
 <li>margin 计算 scale 的偏移量</li>
 <li>interval 控制计算 scale factor 的频率</li>
-<li>fp8_format 使用 FP8 的格式，FP8 有 E4M3 和 E5M2，但是现在不支持纯
-E5M2 的格式训练</li>
+<li>fp8_format 使用 FP8 的格式，FP8 有 E4M3 和 E5M2，但是现在不支持纯 E5M2 的格式训练</li>
 <li>amax_history_len 记录 abs maxval 的历史窗口大小</li>
-<li>amax_compute_algo 在窗口里选择 absmax
-的算法，’max’则是选择历史窗口里最大值，’most_recent’则是选择近期的值，当然你也可以传一个自定义的函数</li>
+<li>amax_compute_algo 在窗口里选择 absmax 的算法，'max’则是选择历史窗口里最大值，'most_recent’则是选择近期的值，当然你也可以传一个自定义的函数</li>
 </ul>
 <p>相关代码为：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-meta">@torch.jit.script</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">_default_get_amax</span>(<span class="hljs-params"></span><br><span class="hljs-params">    amax_history: torch.Tensor,</span><br><span class="hljs-params">    amax_compute_algo: <span class="hljs-built_in">str</span>,</span><br><span class="hljs-params"></span>) -&gt; <span class="hljs-type">Tuple</span>[torch.Tensor, torch.Tensor]:<br>    <span class="hljs-string">&quot;&quot;&quot;Default function to obtain amax from history.&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">if</span> amax_compute_algo == <span class="hljs-string">&quot;max&quot;</span>:<br>        amax = torch.<span class="hljs-built_in">max</span>(amax_history, dim=<span class="hljs-number">0</span>).values<br>    <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># amax_compute_algo == &quot;most_recent&quot;</span><br>        amax = amax_history[<span class="hljs-number">0</span>]<br><br>    amax_history = update_amax_history(amax_history)<br>    <span class="hljs-keyword">return</span> amax_history, amax<br></code></pre></td></tr></table></figure>
@@ -361,123 +332,64 @@ E5M2 的格式训练</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-meta">@torch.jit.script</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">_default_sf_compute</span>(<span class="hljs-params"></span><br><span class="hljs-params">    amax: torch.Tensor,</span><br><span class="hljs-params">    scale: torch.Tensor,</span><br><span class="hljs-params">    fp8_max: <span class="hljs-built_in">float</span>,</span><br><span class="hljs-params">    margin: <span class="hljs-built_in">int</span>,</span><br><span class="hljs-params"></span>) -&gt; torch.Tensor:<br>    <span class="hljs-string">&quot;&quot;&quot;Default function to convert amax to scaling factor.&quot;&quot;&quot;</span><br>    exp = torch.floor(torch.log2(fp8_max / amax)) - margin<br>    sf = torch.<span class="hljs-built_in">round</span>(torch.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, torch.<span class="hljs-built_in">abs</span>(exp)))<br>    sf = torch.where(amax &gt; <span class="hljs-number">0.0</span>, sf, scale)<br>    sf = torch.where(torch.isfinite(amax), sf, scale)<br>    sf = torch.where(exp &lt; <span class="hljs-number">0</span>, <span class="hljs-number">1</span> / sf, sf)<br><br>    <span class="hljs-keyword">return</span> sf<br></code></pre></td></tr></table></figure>
 <ul>
-<li>override_linear_precision 由 3 个 bool 值，分别控制 fprop
-前向，dgrad，wgrad 三个矩阵乘是否用更高的精度来计算，默认都为 False</li>
+<li>override_linear_precision 由 3 个 bool 值，分别控制 fprop 前向，dgrad，wgrad 三个矩阵乘是否用更高的精度来计算，默认都为 False</li>
 </ul>
-<h5 id="transformerenginebasemodule">TransformerEngineBaseModule</h5>
-<p>相关的 Kernel 除了要完成自己的计算任务，也得实时维护 amax
-这些值，因此也需要对应修改 nn.Module，这里 TransformerEngine 继承了
-nn.Module，并且增加了一些 buffer 维护的机制，这些 buffer 用于存储动态
-scale 的信息：</p>
+<h5 id="TransformerEngineBaseModule">TransformerEngineBaseModule</h5>
+<p>相关的 Kernel 除了要完成自己的计算任务，也得实时维护 amax 这些值，因此也需要对应修改 nn.Module，这里 TransformerEngine 继承了 nn.Module，并且增加了一些 buffer 维护的机制，这些 buffer 用于存储动态 scale 的信息：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TransformerEngineBaseModule</span>(torch.nn.Module, ABC):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:<br>        ...<br>        <span class="hljs-variable language_">self</span>.fp8 = <span class="hljs-literal">False</span><br>        <span class="hljs-variable language_">self</span>.fp8_meta = &#123;&#125;<br>        <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;fp8_group&quot;</span>] = <span class="hljs-literal">None</span><br>        <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;recipe&quot;</span>] = get_default_fp8_recipe()<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fp8_init</span>(<span class="hljs-params">self, num_gemms: <span class="hljs-built_in">int</span> = <span class="hljs-number">1</span></span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;Initialize fp8 related metadata and tensors during fprop.&quot;&quot;&quot;</span><br>        <span class="hljs-comment"># If fp8 isn&#x27;t enabled, turn off and return.</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_fp8_enabled():<br>            <span class="hljs-variable language_">self</span>.fp8 = <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">return</span><br><br>        <span class="hljs-comment"># FP8 is already enabled and recipe is the same, don&#x27;t do anything.</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.fp8 <span class="hljs-keyword">and</span> get_fp8_recipe() == <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;recipe&quot;</span>]:<br>            <span class="hljs-keyword">return</span><br><br>        <span class="hljs-comment"># Set FP8, recipe, and other FP8 metadata</span><br>        <span class="hljs-variable language_">self</span>.fp8 = <span class="hljs-literal">True</span><br>        <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;recipe&quot;</span>] = get_fp8_recipe()<br>        <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;num_gemms&quot;</span>] = num_gemms<br>        <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;fp8_group&quot;</span>] = get_fp8_group()<br><br>        <span class="hljs-comment"># Set FP8_MAX per tensor according to recipe</span><br>        <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;fp8_max_fwd&quot;</span>] = <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;recipe&quot;</span>].fp8_format.value.max_fwd<br>        <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;fp8_max_bwd&quot;</span>] = <span class="hljs-variable language_">self</span>.fp8_meta[<span class="hljs-string">&quot;recipe&quot;</span>].fp8_format.value.max_bwd<br><br>        <span class="hljs-comment"># Allocate scales and amaxes</span><br>        <span class="hljs-variable language_">self</span>.init_fp8_meta_tensors()<br></code></pre></td></tr></table></figure>
-<p>而相关 Module 如 LayerNormMLP 继承该 Module，并且传入 fp8_meta
-信息更新：</p>
+<p>而相关 Module 如 LayerNormMLP 继承该 Module，并且传入 fp8_meta 信息更新：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LayerNormMLP</span>(<span class="hljs-title class_ inherited__">TransformerEngineBaseModule</span>):<br><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">...</span>): <br>  out = _LayerNormMLP.apply(<br>            ..., <br>            <span class="hljs-variable language_">self</span>.fp8,<br>            <span class="hljs-variable language_">self</span>.fp8_meta,<br>        )<br></code></pre></td></tr></table></figure>
-<h4 id="fp8-datatype">FP8 datatype</h4>
-<figure>
-<img src="不同数值类型.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="不同数值类型" />
-<figcaption aria-hidden="true">不同数值类型</figcaption>
-</figure>
+<h4 id="FP8-datatype">FP8 datatype</h4>
+<p><img src="%E4%B8%8D%E5%90%8C%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="不同数值类型"></p>
 <p>FP8数据格式有两种, 分别是E4M3和E5M2:</p>
-<ol type="1">
-<li>E4M3有1位符号位, 4位指数位, 3位尾数位,
-可以存储的范围是+/-448和nan</li>
-<li>E5M2有1位符号位, 5位指数位, 2位尾数位,
-可以存储的范围是+/-57344,+/-inf和nan</li>
+<ol>
+<li>E4M3有1位符号位, 4位指数位, 3位尾数位, 可以存储的范围是+/-448和nan</li>
+<li>E5M2有1位符号位, 5位指数位, 2位尾数位, 可以存储的范围是+/-57344,+/-inf和nan</li>
 </ol>
-<p>通常在NN网络中, 前向的激活和权重需要更高的精度, 所以使用E4M3,
-而在反向传播过程中, 网络中流动的梯度通常对精度损失不那么敏感,
-但却需要更高的动态范围, 因此, 反向使用E5M2来存储是最佳选择.</p>
-<p>H100的Tensor Core支持这些类型的任意组合作为输入,
-使得我们能够为每种张量选择其中最适合的精度进行存储.</p>
-<h4 id="fp16混合精度训练">FP16混合精度训练</h4>
+<p>通常在NN网络中, 前向的激活和权重需要更高的精度, 所以使用E4M3, 而在反向传播过程中, 网络中流动的梯度通常对精度损失不那么敏感, 但却需要更高的动态范围, 因此, 反向使用E5M2来存储是最佳选择.</p>
+<p>H100的Tensor Core支持这些类型的任意组合作为输入, 使得我们能够为每种张量选择其中最适合的精度进行存储.</p>
+<h4 id="FP16混合精度训练">FP16混合精度训练</h4>
 <p>用于FP16训练的混合精度方案包含两个组成部分：<strong>选择哪些运算应以FP16执行</strong>，以及<strong>动态损失缩放:</strong></p>
-<ol type="1">
-<li>选择哪些运算以FP16精度执行，需要分析该运算的输出相对于其输入的数值行为，以及预期的性能增益。这使得我们可以将诸如矩阵乘法、卷积和归一化层等运算构成了神经网络计算量的大头,
-它们对数值误差的容忍度较高, 并且在FP16下有巨大的性能提升,
-标记为“安全的”（适合FP16,），而将像求范数（norm）或指数（exp）这类运算标记为需要高精度的操作,
-这些运算必须保持在FP32下以确保精度。</li>
-<li>动态损失缩放能够避免在训练过程中梯度的上溢和下溢。在反向传播中计算出的梯度值可能非常小。FP16的数值表示范围有限，如果梯度值小到超出了FP16能表示的最小正数，它就会被“下溢”成0。一旦梯度变为0，模型的权重就不会更新，训练就停滞了。对此,
-在反向传播之前，将计算出的损失（Loss）<strong>乘以一个很大的缩放因子</strong>（例如1024）。根据链式法则，所有的梯度也会被同等放大1024倍。这样，原本那些可能因太小而下溢的梯度，现在被放大了，就能安全地落在FP16的表示范围内。在优化器更新权重之前，再将梯度除以相同的缩放因子（1024），将其还原回真实的数值。这个缩放因子不是固定的。训练框架会自动监控梯度是否溢出：如果梯度在多次迭代中都没有溢出，就尝试增大缩放因子以保留更小的梯度细节；如果发生了溢出（梯度值被放大后超出了FP16的最大范围），就减小缩放因子(缩放因子往往使用2的幂次方的移位操作,
-不会引入任何计算误差)。</li>
+<ol>
+<li>选择哪些运算以FP16精度执行，需要分析该运算的输出相对于其输入的数值行为，以及预期的性能增益。这使得我们可以将诸如矩阵乘法、卷积和归一化层等运算构成了神经网络计算量的大头, 它们对数值误差的容忍度较高, 并且在FP16下有巨大的性能提升, 标记为“安全的”（适合FP16,），而将像求范数（norm）或指数（exp）这类运算标记为需要高精度的操作, 这些运算必须保持在FP32下以确保精度。</li>
+<li>动态损失缩放能够避免在训练过程中梯度的上溢和下溢。在反向传播中计算出的梯度值可能非常小。FP16的数值表示范围有限，如果梯度值小到超出了FP16能表示的最小正数，它就会被“下溢”成0。一旦梯度变为0，模型的权重就不会更新，训练就停滞了。对此, 在反向传播之前，将计算出的损失（Loss）<strong>乘以一个很大的缩放因子</strong>（例如1024）。根据链式法则，所有的梯度也会被同等放大1024倍。这样，原本那些可能因太小而下溢的梯度，现在被放大了，就能安全地落在FP16的表示范围内。在优化器更新权重之前，再将梯度除以相同的缩放因子（1024），将其还原回真实的数值。这个缩放因子不是固定的。训练框架会自动监控梯度是否溢出：如果梯度在多次迭代中都没有溢出，就尝试增大缩放因子以保留更小的梯度细节；如果发生了溢出（梯度值被放大后超出了FP16的最大范围），就减小缩放因子(缩放因子往往使用2的幂次方的移位操作, 不会引入任何计算误差)。</li>
 </ol>
-<figure>
-<img src="数值范围.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="数值范围" />
-<figcaption aria-hidden="true">数值范围</figcaption>
-</figure>
-<h4 id="fp8混合精度训练">FP8混合精度训练</h4>
+<p><img src="%E6%95%B0%E5%80%BC%E8%8C%83%E5%9B%B4.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="数值范围"></p>
+<h4 id="FP8混合精度训练">FP8混合精度训练</h4>
 <p>尽管FP8类型提供的动态范围足以存储任一特定的激活值或梯度，但却不足以<strong>同时</strong>容纳所有这些值。这使得在FP16训练中行之有效的<strong>单一损失缩放因子策略</strong>，在FP8训练中变得不可行，因而需要为每个FP8张量使用<strong>各自不同的缩放因子</strong>。</p>
 <p>为给定的FP8张量选择合适的缩放因子，存在多种策略：</p>
 <ul>
-<li><strong>即时缩放 (just-in-time</strong>
-<strong>scaling)</strong>：该策略根据当前正在生成的张量的<strong>绝对值最大值
-(amax)</strong>
-来选择缩放因子。在实践中，这是不可行的，因为它需要对数据进行多次处理——算子先以更高精度生成并写出输出，然后找到该输出的绝对值最大值，最后将这个最大值应用到所有数值上以获得最终的FP8输出。这会产生大量额外开销，严重削弱了使用FP8带来的收益。</li>
-<li><strong>延迟缩放 (delayed
-scaling)</strong>：该策略根据在<strong>过去若干次迭代</strong>中观察到的绝对值最大值来选择缩放因子。这能够完全发挥FP8的计算性能，但要求将最大值的历史记录作为FP8算子的额外参数进行存储。</li>
+<li><strong>即时缩放 (**<strong>just-in-time</strong> <strong>scaling)</strong>：该策略根据当前正在生成的张量的</strong>绝对值最大值 (amax)** 来选择缩放因子。在实践中，这是不可行的，因为它需要对数据进行多次处理——算子先以更高精度生成并写出输出，然后找到该输出的绝对值最大值，最后将这个最大值应用到所有数值上以获得最终的FP8输出。这会产生大量额外开销，严重削弱了使用FP8带来的收益。</li>
+<li><strong>延迟缩放 (delayed scaling)</strong>：该策略根据在<strong>过去若干次迭代</strong>中观察到的绝对值最大值来选择缩放因子。这能够完全发挥FP8的计算性能，但要求将最大值的历史记录作为FP8算子的额外参数进行存储。</li>
 </ul>
-<h4 id="mxfp8">MXFP8</h4>
-<p>MXFP8是NVIDIA在<strong>Blackwell架构</strong>中引入的一种<strong>增强版FP8格式</strong>。它的核心目标是解决传统FP8在保证数值精度和处理大动态范围数据时的矛盾，通过一种更精细化的<strong>块缩放（Block
-Scaling）机制</strong>，实现了更高的精度和效率。</p>
-<p>其思想类似于QLoRA: 也就是一个Tensor我们划分为不同的块,
-每个块使用自己的scale, 这样会让总体的数值往E4M3的范围靠拢,
-但是如果Block数量太多, scale还是采用原始FP8下的FP32格式来存储,
-也会占很大的空间, 所以MXFP8的每一块的缩放因子都采用E8M0格式来存储</p>
-<figure>
-<img src="MXFP8.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="MXFP8" />
-<figcaption aria-hidden="true">MXFP8</figcaption>
-</figure>
-<figure>
-<img src="Block%20Scaling.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Block Scaling" />
-<figcaption aria-hidden="true">Block Scaling</figcaption>
-</figure>
-<figure>
-<img src="E8M0.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="E8M0" />
-<figcaption aria-hidden="true">E8M0</figcaption>
-</figure>
-<p>分块量化会带来一个问题, 反向计算梯度过程中,
-需要对原始的输入矩阵进行转置, 原先按照”行主序”生成的量化scale, 转置之后,
-共享同一个缩放因子的连续块就会被打散到不同的新块里面,
-原先的scale就不适用了, 采用的常规的方法是:
-要想得到一个有效的、转置后的MXFP8矩阵，只能先将原始MXFP8数据<strong>反量化</strong>回高精度格式（如FP32），对高精度数据进行转置，然后再<strong>重新量化</strong>成新的MXFP8格式（生成新的块和新的缩放因子）。</p>
-<p>这个“反量化 -&gt; 重新量化”的过程被称为<strong>双重量化
-(double</strong>
-<strong>quantization)</strong>。每一次量化都可能引入微小的误差，进行两次这样的操作会累积误差，导致明显的<strong>精度损失</strong>，这是在训练中极力要避免的。</p>
+<h4 id="MXFP8">MXFP8</h4>
+<p>MXFP8是NVIDIA在<strong>Blackwell架构</strong>中引入的一种<strong>增强版FP8格式</strong>。它的核心目标是解决传统FP8在保证数值精度和处理大动态范围数据时的矛盾，通过一种更精细化的<strong>块缩放（Block Scaling）机制</strong>，实现了更高的精度和效率。</p>
+<p>其思想类似于QLoRA: 也就是一个Tensor我们划分为不同的块, 每个块使用自己的scale, 这样会让总体的数值往E4M3的范围靠拢, 但是如果Block数量太多, scale还是采用原始FP8下的FP32格式来存储, 也会占很大的空间, 所以MXFP8的每一块的缩放因子都采用E8M0格式来存储</p>
+<p><img src="MXFP8.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="MXFP8"></p>
+<p>![Block Scaling](Block Scaling.png)</p>
+<p><img src="E8M0.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="E8M0"></p>
+<p>分块量化会带来一个问题, 反向计算梯度过程中, 需要对原始的输入矩阵进行转置, 原先按照&quot;行主序&quot;生成的量化scale, 转置之后, 共享同一个缩放因子的连续块就会被打散到不同的新块里面, 原先的scale就不适用了, 采用的常规的方法是: 要想得到一个有效的、转置后的MXFP8矩阵，只能先将原始MXFP8数据<strong>反量化</strong>回高精度格式（如FP32），对高精度数据进行转置，然后再<strong>重新量化</strong>成新的MXFP8格式（生成新的块和新的缩放因子）。</p>
+<p>这个“反量化 -&gt; 重新量化”的过程被称为<strong>双重量化 (double</strong> <strong>quantization)</strong>。每一次量化都可能引入微小的误差，进行两次这样的操作会累积误差，导致明显的<strong>精度损失</strong>，这是在训练中极力要避免的。</p>
 <p>Transformer Engine采用的是从源头避免重复量化:</p>
 <p>下图中的Cast模块在前向过程中会从源头计算两个MXFP8的版本:</p>
-<ol type="1">
+<ol>
 <li>原始的非转置的MXFP8格式, 用于前向</li>
-<li>转置后的MXFP8格式, 不会被立刻使用, 而是被暂存起来,
-直接向下传递给反向传播阶段</li>
+<li>转置后的MXFP8格式, 不会被立刻使用, 而是被暂存起来, 直接向下传递给反向传播阶段</li>
 </ol>
 <p>反向的输入梯度也会经过Cast模块生成两个MXFP8版本.</p>
-<figure>
-<img src="TransformerEngine%20MXFP8前向反向优化.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload
-alt="TransformerEngine MXFP8前向反向优化" />
-<figcaption aria-hidden="true">TransformerEngine
-MXFP8前向反向优化</figcaption>
-</figure>
-<p>FP8操作使用<code>fp8_autocast</code>的上下文管理器自动进行,
-其中的自动化操作包括:</p>
+<p>![TransformerEngine MXFP8前向反向优化](TransformerEngine MXFP8前向反向优化.png)</p>
+<p>FP8操作使用<code>fp8_autocast</code>的上下文管理器自动进行, 其中的自动化操作包括:</p>
 <ul>
 <li>所有 FP8 安全操作的输入均转换为 FP8</li>
 <li>Amax 历史记录已更新</li>
 <li>计算新的缩放因子并准备进行下一次迭代</li>
 </ul>
-<p>当模型在<code>fp8_autocast</code>区域内运行时，尤其是在多 GPU
-训练中，需要进行一些通信以同步缩放因子和 amax
-历史记录。为了在不增加太多开销的情况下执行该通信，<code>fp8_autocast</code>上下文管理器会在执行通信之前聚合张量</p>
+<p>当模型在<code>fp8_autocast</code>区域内运行时，尤其是在多 GPU 训练中，需要进行一些通信以同步缩放因子和 amax 历史记录。为了在不增加太多开销的情况下执行该通信，<code>fp8_autocast</code>上下文管理器会在执行通信之前聚合张量</p>
 <p>由于这种聚合，反向调用需要在<code>fp8_autocast</code>上下文管理器之外进行.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-keyword">with</span> fp8_autocast():<br>    output = model(data)<br>    loss = criterion(output, target)<br><br><span class="hljs-comment"># 在上下文管理器外面调用 backward()</span><br>loss.backward()  <br></code></pre></td></tr></table></figure>
-<p>如果 <code>loss.backward()</code> 在 <code>with</code>
-块内部，那么反向传播会先开始。但此时，用于反向传播的缩放因子等信息可能还没有在各个GPU之间同步，这会导致计算错误。</p>
-<p>因此，必须先退出 <code>with</code>
-块，让它完成所有必要的聚合和通信(<code>fp8_autocast</code>被设计为在退出with时,
-自动触发”打包聚合和通信”的操作)，确保所有GPU都拿到了最新的、同步好的缩放因子。然后，再执行
-<code>loss.backward()</code>，此时的计算才是安全和正确的。</p>
-<p>注: FP8操作下的和FP32下的输出数值不相等, 并不是量化带来的误差,
-量化只是乘以一个数, 再除以一个数, 并不会带来误差,
-是<strong>在计算开始前，将高精度的FP32输入（包括权重）转换为低精度FP8时，就已经发生了不可逆的精度损失.</strong></p>
+<p>如果 <code>loss.backward()</code> 在 <code>with</code> 块内部，那么反向传播会先开始。但此时，用于反向传播的缩放因子等信息可能还没有在各个GPU之间同步，这会导致计算错误。</p>
+<p>因此，必须先退出 <code>with</code> 块，让它完成所有必要的聚合和通信(<code>fp8_autocast</code>被设计为在退出with时, 自动触发&quot;打包聚合和通信&quot;的操作)，确保所有GPU都拿到了最新的、同步好的缩放因子。然后，再执行 <code>loss.backward()</code>，此时的计算才是安全和正确的。</p>
+<p>注: FP8操作下的和FP32下的输出数值不相等, 并不是量化带来的误差, 量化只是乘以一个数, 再除以一个数, 并不会带来误差, 是<strong>在计算开始前，将高精度的FP32输入（包括权重）转换为低精度FP8时，就已经发生了不可逆的精度损失.</strong></p>
 
                 
               </div>
