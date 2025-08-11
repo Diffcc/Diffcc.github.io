@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/ling.jpg">
   <link rel="icon" href="../../../../img/ling.jpg">
   
@@ -303,7 +303,7 @@
 <p>在混合精度训练的情况下, 因为FP16本身的数值范围还是足够大的, <strong>在AMP(Automatic Mixed Prescision)下, 只在最后一个Loss做一个scaling</strong>, 这个步骤足以保证整个模型在运算过程中不会产生溢出.</p>
 <p>而FP8相比FP16减少了更多有效位, 因此不能简单复用FP16下的策略, 需要给每个FP8 Tensor单独设置一个合适的scale factor. Transformer Engine需要动态地对输入范围进行调整, 如图所示:</p>
 <p>![H100 TransformerEngine](H100 TransformerEngine.PNG)</p>
-<p><img src="FP8%E9%87%8F%E5%8C%96%E7%AE%A1%E7%90%86%E5%99%A8.PNG" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="FP8量化管理器"></p>
+<p><img src="FP8%E9%87%8F%E5%8C%96%E7%AE%A1%E7%90%86%E5%99%A8.PNG" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="FP8量化管理器" /></p>
 <p>具体到每一个算子实现动态范围调整的原理很简单, 通过记录历史的abs max值, 来去调整最终缩放的范围.</p>
 <p>其主要的 Kernel 实现都放在了 <a href="https://github.com/NVIDIA/TransformerEngine/tree/main/transformer_engine/common">common</a> 目录下，我们以 gelu 这个 kernel 为例，最终它会调用到 <code>vectorized_pointwise.h</code>这个文件，我们主要看 <code>unary_kernel</code></p>
 <h4 id="unary-kernel">unary_kernel</h4>
@@ -340,7 +340,7 @@
 <p>而相关 Module 如 LayerNormMLP 继承该 Module，并且传入 fp8_meta 信息更新：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LayerNormMLP</span>(<span class="hljs-title class_ inherited__">TransformerEngineBaseModule</span>):<br><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">...</span>): <br>  out = _LayerNormMLP.apply(<br>            ..., <br>            <span class="hljs-variable language_">self</span>.fp8,<br>            <span class="hljs-variable language_">self</span>.fp8_meta,<br>        )<br></code></pre></td></tr></table></figure>
 <h4 id="FP8-datatype">FP8 datatype</h4>
-<p><img src="%E4%B8%8D%E5%90%8C%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="不同数值类型"></p>
+<p><img src="%E4%B8%8D%E5%90%8C%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="不同数值类型" /></p>
 <p>FP8数据格式有两种, 分别是E4M3和E5M2:</p>
 <ol>
 <li>E4M3有1位符号位, 4位指数位, 3位尾数位, 可以存储的范围是+/-448和nan</li>
@@ -354,7 +354,7 @@
 <li>选择哪些运算以FP16精度执行，需要分析该运算的输出相对于其输入的数值行为，以及预期的性能增益。这使得我们可以将诸如矩阵乘法、卷积和归一化层等运算构成了神经网络计算量的大头, 它们对数值误差的容忍度较高, 并且在FP16下有巨大的性能提升, 标记为“安全的”（适合FP16,），而将像求范数（norm）或指数（exp）这类运算标记为需要高精度的操作, 这些运算必须保持在FP32下以确保精度。</li>
 <li>动态损失缩放能够避免在训练过程中梯度的上溢和下溢。在反向传播中计算出的梯度值可能非常小。FP16的数值表示范围有限，如果梯度值小到超出了FP16能表示的最小正数，它就会被“下溢”成0。一旦梯度变为0，模型的权重就不会更新，训练就停滞了。对此, 在反向传播之前，将计算出的损失（Loss）<strong>乘以一个很大的缩放因子</strong>（例如1024）。根据链式法则，所有的梯度也会被同等放大1024倍。这样，原本那些可能因太小而下溢的梯度，现在被放大了，就能安全地落在FP16的表示范围内。在优化器更新权重之前，再将梯度除以相同的缩放因子（1024），将其还原回真实的数值。这个缩放因子不是固定的。训练框架会自动监控梯度是否溢出：如果梯度在多次迭代中都没有溢出，就尝试增大缩放因子以保留更小的梯度细节；如果发生了溢出（梯度值被放大后超出了FP16的最大范围），就减小缩放因子(缩放因子往往使用2的幂次方的移位操作, 不会引入任何计算误差)。</li>
 </ol>
-<p><img src="%E6%95%B0%E5%80%BC%E8%8C%83%E5%9B%B4.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="数值范围"></p>
+<p><img src="%E6%95%B0%E5%80%BC%E8%8C%83%E5%9B%B4.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="数值范围" /></p>
 <h4 id="FP8混合精度训练">FP8混合精度训练</h4>
 <p>尽管FP8类型提供的动态范围足以存储任一特定的激活值或梯度，但却不足以<strong>同时</strong>容纳所有这些值。这使得在FP16训练中行之有效的<strong>单一损失缩放因子策略</strong>，在FP8训练中变得不可行，因而需要为每个FP8张量使用<strong>各自不同的缩放因子</strong>。</p>
 <p>为给定的FP8张量选择合适的缩放因子，存在多种策略：</p>
@@ -365,9 +365,9 @@
 <h4 id="MXFP8">MXFP8</h4>
 <p>MXFP8是NVIDIA在<strong>Blackwell架构</strong>中引入的一种<strong>增强版FP8格式</strong>。它的核心目标是解决传统FP8在保证数值精度和处理大动态范围数据时的矛盾，通过一种更精细化的<strong>块缩放（Block Scaling）机制</strong>，实现了更高的精度和效率。</p>
 <p>其思想类似于QLoRA: 也就是一个Tensor我们划分为不同的块, 每个块使用自己的scale, 这样会让总体的数值往E4M3的范围靠拢, 但是如果Block数量太多, scale还是采用原始FP8下的FP32格式来存储, 也会占很大的空间, 所以MXFP8的每一块的缩放因子都采用E8M0格式来存储</p>
-<p><img src="MXFP8.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="MXFP8"></p>
+<p><img src="MXFP8.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="MXFP8" /></p>
 <p>![Block Scaling](Block Scaling.png)</p>
-<p><img src="E8M0.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="E8M0"></p>
+<p><img src="E8M0.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="E8M0" /></p>
 <p>分块量化会带来一个问题, 反向计算梯度过程中, 需要对原始的输入矩阵进行转置, 原先按照&quot;行主序&quot;生成的量化scale, 转置之后, 共享同一个缩放因子的连续块就会被打散到不同的新块里面, 原先的scale就不适用了, 采用的常规的方法是: 要想得到一个有效的、转置后的MXFP8矩阵，只能先将原始MXFP8数据<strong>反量化</strong>回高精度格式（如FP32），对高精度数据进行转置，然后再<strong>重新量化</strong>成新的MXFP8格式（生成新的块和新的缩放因子）。</p>
 <p>这个“反量化 -&gt; 重新量化”的过程被称为<strong>双重量化 (double</strong> <strong>quantization)</strong>。每一次量化都可能引入微小的误差，进行两次这样的操作会累积误差，导致明显的<strong>精度损失</strong>，这是在训练中极力要避免的。</p>
 <p>Transformer Engine采用的是从源头避免重复量化:</p>

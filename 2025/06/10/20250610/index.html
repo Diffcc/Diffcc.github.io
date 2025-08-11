@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/ling.jpg">
   <link rel="icon" href="../../../../img/ling.jpg">
   
@@ -305,12 +305,12 @@
 <li><code>perf</code>支持<strong>动态探针（Dynamic Probes）</strong>，类似于<code>ftrace</code>和<code>eBPF</code>：<strong>kprobes</strong>：动态追踪内核函数，<strong>uprobes</strong>：动态追踪用户态函数，<strong>tracepoints</strong>：静态内核跟踪点（如 <code>sched:sched_switch</code>）。</li>
 </ul>
 <p>每隔一个固定时间，CPU上产生一个中断，Perf监控当前是哪个进程、哪个函数，然后给对应的进程和函数加一个统计值，这样就知道CPU有多少时间在某个进程或某个函数上。</p>
-<p><img src="Perf%E5%8E%9F%E7%90%86%E5%9B%BE.jpg" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf原理图"></p>
+<p><img src="Perf%E5%8E%9F%E7%90%86%E5%9B%BE.jpg" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf原理图" /></p>
 <h2 id="安装">安装</h2>
 <h3 id="1-云端">1.云端</h3>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">https://ui.perfetto.dev/<br></code></pre></td></tr></table></figure>
 <p>Google浏览器访问上述链接，通过导入<code>.json</code>记录文件，生成性能火焰图</p>
-<p><img src="Perf%E7%BD%91%E9%A1%B5%E7%AB%AF%E7%95%8C%E9%9D%A2.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf网页端界面"></p>
+<p><img src="Perf%E7%BD%91%E9%A1%B5%E7%AB%AF%E7%95%8C%E9%9D%A2.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf网页端界面" /></p>
 <h3 id="2-本地">2. 本地</h3>
 <ol>
 <li>运行 <code>perf –version</code> 查看当前需要安装哪些库文件</li>
@@ -355,10 +355,10 @@
 </tr>
 </tbody>
 </table>
-<p><img src="Perf_top.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf_top"></p>
+<p><img src="Perf_top.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Perf_top" /></p>
 <p>执行下面命令监控所有进程</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf top -e task-clock -g<br></code></pre></td></tr></table></figure>
-<p><img src="%E7%9B%91%E6%8E%A7%E6%89%80%E6%9C%89%E8%BF%9B%E7%A8%8B.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="监控所有进程"></p>
+<p><img src="%E7%9B%91%E6%8E%A7%E6%89%80%E6%9C%89%E8%BF%9B%E7%A8%8B.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="监控所有进程" /></p>
 <h3 id="2-生成数据文件后离线分析"><strong>2.生成数据文件后离线分析</strong></h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">perf record<br></code></pre></td></tr></table></figure>
 <p><code>perf record</code>用于 <strong>采集性能数据并保存到文件</strong>（默认生成 <code>perf.data</code>），便于后续离线分析（如 <code>perf report</code>、生成火焰图等</p>
@@ -432,7 +432,7 @@
 <li>通过火焰图分析（需要用到<em><strong>FlameGraph</strong></em>工具，也可以直接使用网页端<a target="_blank" rel="noopener" href="https://ui.perfetto.dev/%EF%BC%89">https://ui.perfetto.dev/）</a></li>
 </ol>
 <p>CPU火焰图中的每一个方框是一个函数，方框的长度，代表了它的执行时间，所以越宽的函数，执行越久。火焰图的楼层每高一层，就是更深一级的函数被调用，最顶层的函数，是叶子函数。</p>
-<p><img src="%E7%81%AB%E7%84%B0%E5%9B%BE.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="火焰图"></p>
+<p><img src="%E7%81%AB%E7%84%B0%E5%9B%BE.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="火焰图" /></p>
 <ul>
 <li>FlameGraph工具使用</li>
 </ul>
