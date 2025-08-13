@@ -30,9 +30,11 @@
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/%E4%B8%8D%E5%90%8C%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/%E6%95%B0%E5%80%BC%E8%8C%83%E5%9B%B4.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/MXFP8.png">
+<meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/Block-Scaling.png">
 <meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/E8M0.png">
+<meta property="og:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/TransformerEngine-MXFP8%E5%89%8D%E5%90%91%E5%8F%8D%E5%90%91%E4%BC%98%E5%8C%96.png">
 <meta property="article:published_time" content="2025-08-04T14:05:00.000Z">
-<meta property="article:modified_time" content="2025-08-04T14:18:52.199Z">
+<meta property="article:modified_time" content="2025-08-13T15:42:38.026Z">
 <meta property="article:author" content="Diffcc">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Diffcc/Diffcc.github.io/2025/08/04/20250804/FP8%E9%87%8F%E5%8C%96%E7%AE%A1%E7%90%86%E5%99%A8.PNG">
@@ -366,7 +368,7 @@
 <p>MXFP8是NVIDIA在<strong>Blackwell架构</strong>中引入的一种<strong>增强版FP8格式</strong>。它的核心目标是解决传统FP8在保证数值精度和处理大动态范围数据时的矛盾，通过一种更精细化的<strong>块缩放（Block Scaling）机制</strong>，实现了更高的精度和效率。</p>
 <p>其思想类似于QLoRA: 也就是一个Tensor我们划分为不同的块, 每个块使用自己的scale, 这样会让总体的数值往E4M3的范围靠拢, 但是如果Block数量太多, scale还是采用原始FP8下的FP32格式来存储, 也会占很大的空间, 所以MXFP8的每一块的缩放因子都采用E8M0格式来存储</p>
 <p><img src="MXFP8.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="MXFP8" /></p>
-<p>![Block Scaling](Block Scaling.png)</p>
+<p><img src="Block-Scaling.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="Block-Scaling" /></p>
 <p><img src="E8M0.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="E8M0" /></p>
 <p>分块量化会带来一个问题, 反向计算梯度过程中, 需要对原始的输入矩阵进行转置, 原先按照&quot;行主序&quot;生成的量化scale, 转置之后, 共享同一个缩放因子的连续块就会被打散到不同的新块里面, 原先的scale就不适用了, 采用的常规的方法是: 要想得到一个有效的、转置后的MXFP8矩阵，只能先将原始MXFP8数据<strong>反量化</strong>回高精度格式（如FP32），对高精度数据进行转置，然后再<strong>重新量化</strong>成新的MXFP8格式（生成新的块和新的缩放因子）。</p>
 <p>这个“反量化 -&gt; 重新量化”的过程被称为<strong>双重量化 (double</strong> <strong>quantization)</strong>。每一次量化都可能引入微小的误差，进行两次这样的操作会累积误差，导致明显的<strong>精度损失</strong>，这是在训练中极力要避免的。</p>
@@ -377,7 +379,7 @@
 <li>转置后的MXFP8格式, 不会被立刻使用, 而是被暂存起来, 直接向下传递给反向传播阶段</li>
 </ol>
 <p>反向的输入梯度也会经过Cast模块生成两个MXFP8版本.</p>
-<p>![TransformerEngine MXFP8前向反向优化](TransformerEngine MXFP8前向反向优化.png)</p>
+<p><img src="TransformerEngine-MXFP8%E5%89%8D%E5%90%91%E5%8F%8D%E5%90%91%E4%BC%98%E5%8C%96.png" srcset="/Diffcc/Diffcc.github.io/img/loading.gif" lazyload alt="TransformerEngine-MXFP8前向反向优化" /></p>
 <p>FP8操作使用<code>fp8_autocast</code>的上下文管理器自动进行, 其中的自动化操作包括:</p>
 <ul>
 <li>所有 FP8 安全操作的输入均转换为 FP8</li>
